@@ -1,0 +1,32 @@
+:root {
+  color-scheme: light;
+  --gq-color-ink: #111410;
+  --gq-color-paper: #f3f0e8;
+  --gq-color-paper-subtle: #e7e4dc;
+  --gq-color-surface: #ffffff;
+  --gq-color-acid: #c8f56a;
+  --gq-color-text: #111410;
+  --gq-color-text-muted: #55594f;
+  --gq-color-separator: #b8bbb2;
+  --gq-color-control-border: #60645c;
+  --gq-color-success-text: #245c16;
+  --gq-color-success-surface: #e8f8c7;
+  --gq-color-danger-text: #8f2119;
+  --gq-color-danger-surface: #ffe6e1;
+  --gq-color-info-text: #254f75;
+  --gq-font-ui: "Segoe UI", system-ui, sans-serif;
+  --gq-font-data: "Cascadia Mono", ui-monospace, monospace;
+  --gq-space-1: .25rem;
+  --gq-space-2: .5rem;
+  --gq-space-3: .75rem;
+  --gq-space-4: 1rem;
+  --gq-space-6: 1.5rem;
+  --gq-space-8: 2rem;
+  --gq-space-12: 3rem;
+  --gq-radius-control: .375rem;
+  --gq-radius-panel: .625rem;
+  --gq-duration-fast: 120ms;
+  --gq-layout-content-max: 90rem;
+  --gq-layout-reading-max: 72ch;
+  --gq-layout-topbar-height: 3.5rem;
+}

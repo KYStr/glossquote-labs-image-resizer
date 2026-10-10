@@ -1,0 +1,8 @@
+export const strings={
+  locale:'en',
+  errors:{EMPTY_FILE:'This file is empty. Choose another image.',MULTIPLE_FILES:'Choose one image at a time. Select a single file to continue.',FILE_TOO_LARGE:'The file exceeds 10 MiB. Reduce it with another local tool first.',FORMAT_UNSUPPORTED:'Choose a static PNG or JPEG. Animated images and image URLs are unsupported.',IMAGE_TOO_LARGE:'The image exceeds 8,192 pixels per side or 12 MP. Reduce it with another local tool first.',IMAGE_CORRUPT:'This image could not be read. Choose another static PNG or JPEG.',SIZE_INVALID:'Enter an integer from 1 to 4,000 without enlarging the image. Output must stay within 8 MP.',QUALITY_INVALID:'Enter an integer quality from 1 to 100.',ENCODE_FAILED:'The image could not be generated and has not been saved. Try again or choose another format.',BROWSER_UNSUPPORTED:'This browser cannot complete image processing. Use a verified browser version.'},
+  messages:{idle:'Choose one image, adjust its size, then save the result.',checking:'Checking the image.',decoding:'Reading the image.',ready:'Size is ready. Generate the image to inspect the actual result.',encoding:'Generating the image. You can cancel.',cancelled:'Cancelled. The image has not been saved.'},
+  generate:'Generate image',generating:'Generating image…',original:'Original',output:'Output',noSource:'No image selected',noDimensions:'Output dimensions will appear here',fixDimensions:'Correct the size setting',fallback:'This browser used PNG instead. The download is also a PNG file.',
+  bytes:(bytes,kib)=>`${bytes} bytes (${kib} KiB)`,
+  success:(width,height,format,bytes)=>`Image generated: ${width} × ${height}, ${format}, ${bytes}.`
+};

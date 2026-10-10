@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="在瀏覽器內縮小單張 PNG 或 JPEG，預覽尺寸並儲存結果。支援透明背景與 JPEG 品質設定，檔案內容不由工具上傳。">
+  <title>圖片縮放與 PNG、JPEG 匯出｜GlossQuote-Labs</title>
+  <link rel="stylesheet" href="./styles/tokens.css"><link rel="stylesheet" href="./styles/app.css"><script type="module" src="./js/app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳至圖片工作區</a>
+  <header class="topbar"><a class="brand" href="https://glossquote.com/index.html">GlossQuote-Labs</a><span>圖片縮放</span><nav aria-label="介面語言"><span aria-current="page">繁體中文</span><a href="./en/index.html" lang="en" hreflang="en">English</a></nav><button id="clear" type="button" disabled>清除圖片</button></header>
+  <main id="main">
+    <div class="intro"><h1>圖片縮放與匯出</h1><p>選擇一張圖片，調整尺寸後儲存。</p></div>
+    <div class="file-row"><label class="file-picker" for="file">選擇圖片<input id="file" type="file" accept="image/png,image/jpeg" disabled aria-describedby="file-help filename"></label><p id="file-help">單張靜態 PNG／JPEG，最多 10 MiB、12 MP；不接受圖片網址。</p></div>
+    <p id="filename" class="filename"></p>
+    <div class="workspace">
+      <section id="drop-zone" class="preview-area" aria-label="圖片預覽與拖放區">
+        <div role="tablist" aria-label="圖片預覽" class="tabs"><button id="source-tab" type="button" role="tab" aria-selected="true" aria-controls="source-panel" tabindex="0">來源預覽</button><button id="result-tab" type="button" role="tab" aria-selected="false" aria-controls="result-panel" tabindex="-1" disabled>實際結果</button></div>
+        <div id="source-panel" class="preview-panel" role="tabpanel" aria-labelledby="source-tab"><div id="empty" class="empty"><strong>把圖片拖到這裡</strong><p>也可以使用上方「選擇圖片」。</p><small>等比例縮小 · 原圖保持不變</small></div><canvas id="preview" role="img" aria-label="來源圖片預覽" hidden></canvas></div>
+        <div id="result-panel" class="preview-panel checker" role="tabpanel" aria-labelledby="result-tab" hidden><img id="result-image" alt="處理結果預覽"></div>
+        <div class="measurements"><p id="source-info">尚未選擇圖片</p><p id="dimensions">輸出尺寸會顯示於此</p></div>
+        <p class="preview-note" id="preview-note">來源預覽只呈現尺寸與底色；實際結果在產生後顯示。</p>
+      </section>
+      <form id="settings" class="settings" aria-label="匯出設定">
+        <fieldset id="fields" disabled><legend>匯出設定</legend>
+          <label for="mode">縮放基準</label><select id="mode"><option value="long-edge">最長邊</option><option value="width">寬</option><option value="height">高</option></select>
+          <label for="size">目標尺寸（px）</label><input id="size" type="text" inputmode="numeric" maxlength="16" value="1920" aria-describedby="size-help size-error"><small id="size-help">等比例鎖定。整數 1–4,000，不放大；輸出最多 8 MP。</small><p id="size-error" class="field-error" hidden></p>
+          <label for="format">輸出格式</label><select id="format"><option value="image/png">PNG</option><option value="image/jpeg">JPEG</option><option value="image/webp" id="webp-option" disabled>WebP</option></select>
+          <p id="webp-note" class="help" hidden>此瀏覽器無法編碼 WebP，請使用 PNG 或 JPEG。</p><p id="jpeg-note" class="help" hidden>JPEG 不保留透明度，透明區會以白色背景合成。</p>
+          <div id="quality-field" hidden><label for="quality">品質（1–100）</label><input id="quality" type="text" inputmode="numeric" maxlength="16" value="85" aria-describedby="quality-help quality-error"><small id="quality-help">品質影響結果容量；產生後才顯示實際大小。</small><p id="quality-error" class="field-error" hidden></p></div>
+        </fieldset>
+        <div class="actions"><button id="generate" class="primary" type="submit" disabled>產生圖片</button><button id="cancel" type="button" hidden>取消處理</button></div>
+        <p class="help">只在按「下載圖片」後儲存。改設定會讓舊結果失效。</p>
+      </form>
+    </div>
+    <p id="status" class="status" role="status" aria-live="polite">正在檢查瀏覽器能力。</p>
+    <section id="result-summary" class="result-summary" aria-label="匯出結果" hidden><div><strong>實際匯出結果</strong><p id="output-info"></p><p id="fallback" hidden></p></div><button id="download" type="button" class="primary" disabled>下載圖片</button></section>
+    <section class="reading" aria-labelledby="how-title"><h2 id="how-title">如何縮小圖片</h2><ol><li>選擇或拖入一張靜態 PNG 或 JPEG。</li><li>依最長邊、寬或高設定尺寸；長寬比例始終鎖定。</li><li>選擇 PNG、JPEG，或瀏覽器可用的 WebP。JPEG 會把透明區合成白底。</li><li>按「產生圖片」查看實際格式、寬高與容量；確認後按「下載圖片」。</li></ol></section>
+    <section class="reading" aria-labelledby="limits-title"><h2 id="limits-title">支援格式與限制</h2><p>輸入限單張、非空、最多 10 MiB（10,485,760 bytes）的靜態 PNG 或 8-bit baseline／progressive JPEG；每邊 1–8,192 px、總像素最多 12,000,000。先檢查容器尺寸，再解碼；動畫 PNG、GIF、HEIC、SVG、WebP 輸入、網址與批次不支援。</p><p>只縮小、不裁切。目標尺寸為整數 1–4,000 px，輸出最多 8,000,000 像素，不放大。次要邊會四捨五入且至少 1 px。預設最長邊為原圖最長邊與 1,920 的較小值。</p><p>PNG 與 WebP 保留透明度；JPEG 品質預設 85，範圍 1–100。WebP 依實際編碼能力開放。瀏覽器啟動時會自測 EXIF 八方向與基本格式；未通過時停用處理。實測版本為桌面 Chromium 155.0.8059.27；Firefox、Edge、Safari 與實體手機仍未驗證。</p></section>
+    <section class="reading" aria-labelledby="privacy-title"><h2 id="privacy-title">檔案留在這個頁面</h2><p>圖片在瀏覽器內處理，沒有圖片上傳流程，不寫入瀏覽器儲存。網站的 HTML、JS 與 CSS 本身仍需載入；託管方可能收到一般資源請求的連線資訊。</p><p>清除會釋放本頁持有的圖片、結果與物件網址，不會刪除已下載的檔案。瀏覽器的底層快取與記憶體回收仍由瀏覽器管理。取消編碼會丟棄晚到結果，但無法保證原生編碼立即停止。</p></section>
+    <section class="reading faq" aria-labelledby="faq-title"><h2 id="faq-title">常見問題</h2>
+      <details><summary>為什麼圖片不一定更小？</summary><p>PNG 是無損格式；重新編碼與原圖內容會影響容量。產生後才會顯示實際檔案大小，沒有指定容量或節省比例保證。</p></details>
+      <details><summary>透明背景轉 JPEG 會怎樣？</summary><p>JPEG 不保留透明度，本工具固定以白色作為背景。PNG 與可用的 WebP 則保留透明度；棋盤格只用於預覽。</p></details>
+      <details><summary>會上傳圖片嗎？</summary><p>工具在這個瀏覽器頁面處理所選檔案，沒有圖片上傳流程。這不等於保證裝置或瀏覽器沒有其他網路活動。</p></details>
+      <details><summary>支援手機照片與動圖嗎？</summary><p>第一版只接受符合限制的靜態 PNG／JPEG。HEIC、GIF 與動畫 PNG 不支援；實體手機相容性尚未驗證。</p></details>
+      <details><summary>EXIF、色彩與印刷 DPI 會保留嗎？</summary><p>EXIF 方向會在解碼時套用。工具不複製原始 EXIF、GPS 或 ICC 片段，不保證輸出所有 metadata 都完全清空，也不提供印刷色彩或 DPI 保真。色彩轉換採瀏覽器預設，不承諾不同瀏覽器逐像素一致。</p></details>
+    </section>
+    <noscript><p>請啟用 JavaScript 以選擇、縮放與匯出圖片。檔案不會由這個工具上傳。</p></noscript>
+  </main>
+  <footer><a href="https://glossquote.com/index.html">返回 GlossQuote-Labs 工具首頁</a></footer>
+</body>
+</html>

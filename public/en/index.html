@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Resize one PNG or JPEG in your browser, preview its dimensions, and export PNG, JPEG or supported WebP. Image content is processed locally without an upload flow.">
+  <title>Image resizer and PNG, JPEG export | GlossQuote-Labs</title>
+  <link rel="stylesheet" href="../styles/tokens.css"><link rel="stylesheet" href="../styles/app.css"><script type="module" src="../js/app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to image workspace</a>
+  <header class="topbar"><a class="brand" href="https://glossquote.com/en/index.html">GlossQuote-Labs</a><span>Image resizer</span><nav aria-label="Interface language"><a href="../index.html" lang="zh-Hant" hreflang="zh-Hant">繁體中文</a><span aria-current="page">English</span></nav><button id="clear" type="button" disabled>Clear image</button></header>
+  <main id="main">
+    <div class="intro"><h1>Resize and export an image</h1><p>Choose one image, adjust its size, then save the result.</p></div>
+    <div class="file-row"><label class="file-picker" for="file">Choose image<input id="file" type="file" accept="image/png,image/jpeg" disabled aria-describedby="file-help filename"></label><p id="file-help">One static PNG or JPEG, up to 10 MiB and 12 MP. Image URLs are unsupported.</p></div>
+    <p id="filename" class="filename"></p>
+    <div class="workspace">
+      <section id="drop-zone" class="preview-area" aria-label="Image preview and drop area">
+        <div role="tablist" aria-label="Image preview" class="tabs"><button id="source-tab" type="button" role="tab" aria-selected="true" aria-controls="source-panel" tabindex="0">Source preview</button><button id="result-tab" type="button" role="tab" aria-selected="false" aria-controls="result-panel" tabindex="-1" disabled>Actual result</button></div>
+        <div id="source-panel" class="preview-panel" role="tabpanel" aria-labelledby="source-tab"><div id="empty" class="empty"><strong>Drop your image here</strong><p>Or use “Choose image” above.</p><small>Proportions stay locked. Your original stays unchanged.</small></div><canvas id="preview" role="img" aria-label="Source image preview" hidden></canvas></div>
+        <div id="result-panel" class="preview-panel checker" role="tabpanel" aria-labelledby="result-tab" hidden><img id="result-image" alt="Processed image preview"></div>
+        <div class="measurements"><p id="source-info">No image selected</p><p id="dimensions">Output dimensions will appear here</p></div>
+        <p class="preview-note" id="preview-note">The source preview illustrates size and background. Generate the image to see the actual result.</p>
+      </section>
+      <form id="settings" class="settings" aria-label="Export settings">
+        <fieldset id="fields" disabled><legend>Export settings</legend>
+          <label for="mode">Resize by</label><select id="mode"><option value="long-edge">Longest edge</option><option value="width">Width</option><option value="height">Height</option></select>
+          <label for="size">Target size (px)</label><input id="size" type="text" inputmode="numeric" maxlength="16" value="1920" aria-describedby="size-help size-error"><small id="size-help">Proportions locked. Integer 1–4,000, no enlargement. Output up to 8 MP.</small><p id="size-error" class="field-error" hidden></p>
+          <label for="format">Output format</label><select id="format"><option value="image/png">PNG</option><option value="image/jpeg">JPEG</option><option value="image/webp" id="webp-option" disabled>WebP</option></select>
+          <p id="webp-note" class="help" hidden>This browser cannot encode WebP. Use PNG or JPEG.</p><p id="jpeg-note" class="help" hidden>JPEG does not preserve transparency. Transparent areas will be composited onto white.</p>
+          <div id="quality-field" hidden><label for="quality">Quality (1–100)</label><input id="quality" type="text" inputmode="numeric" maxlength="16" value="85" aria-describedby="quality-help quality-error"><small id="quality-help">Quality affects file size. The actual size appears after generation.</small><p id="quality-error" class="field-error" hidden></p></div>
+        </fieldset>
+        <div class="actions"><button id="generate" class="primary" type="submit" disabled>Generate image</button><button id="cancel" type="button" hidden>Cancel processing</button></div>
+        <p class="help">Saving starts only when you choose “Download image”. Changing settings invalidates the previous result.</p>
+      </form>
+    </div>
+    <p id="status" class="status" role="status" aria-live="polite">Checking browser capabilities.</p>
+    <section id="result-summary" class="result-summary" aria-label="Export result" hidden><div><strong>Actual export result</strong><p id="output-info"></p><p id="fallback" hidden></p></div><button id="download" type="button" class="primary" disabled>Download image</button></section>
+    <section class="reading" aria-labelledby="how-title"><h2 id="how-title">How to resize an image</h2><ol><li>Choose or drop one static PNG or JPEG.</li><li>Set the longest edge, width or height. Proportions always stay locked.</li><li>Choose PNG, JPEG or browser-supported WebP. JPEG uses a white background for transparent areas.</li><li>Choose “Generate image” to inspect the actual format, dimensions and size. Then choose “Download image”.</li></ol></section>
+    <section class="reading" aria-labelledby="limits-title"><h2 id="limits-title">Supported formats and limits</h2><p>Input is one nonempty static PNG or 8-bit baseline/progressive JPEG up to 10 MiB (10,485,760 bytes), with each side from 1 to 8,192 pixels and no more than 12,000,000 pixels in total. Container dimensions are checked before decoding. Animated PNG, GIF, HEIC, SVG, WebP input, image URLs and batches are unsupported.</p><p>The tool reduces size without cropping. Enter an integer from 1 to 4,000 pixels; output cannot exceed 8,000,000 pixels or enlarge the original. The other edge is rounded and stays at least 1 pixel. The default longest edge is the smaller of the original longest edge and 1,920 pixels.</p><p>PNG and WebP preserve transparency. JPEG quality defaults to 85 and accepts 1–100. WebP is enabled only when the browser returns its actual MIME type. Startup checks all eight EXIF orientations and basic formats; processing is disabled if the checks fail. Desktop Chromium 155.0.8059.27 has been tested. Firefox, Edge, Safari and physical mobile devices remain unverified.</p></section>
+    <section class="reading" aria-labelledby="privacy-title"><h2 id="privacy-title">Files stay in this page</h2><p>Images are processed in your browser without an image upload flow or writes to browser storage. The website’s HTML, JavaScript and CSS still need to load. Hosting providers may receive ordinary resource-request connection information.</p><p>Clear releases the image, result and object URLs held by this page. It does not delete files you have already downloaded. Browser caches and memory collection remain under the browser’s control. Cancel discards a late encoding result but cannot guarantee that native encoding stops immediately.</p></section>
+    <section class="reading faq" aria-labelledby="faq-title"><h2 id="faq-title">Frequently asked questions</h2>
+      <details><summary>Why is the output not always smaller?</summary><p>PNG is lossless. Re-encoding and image content affect file size. The actual size appears after generation; a target file size or savings percentage is not guaranteed.</p></details>
+      <details><summary>What happens to transparency in JPEG?</summary><p>JPEG does not preserve transparency. This tool always composites transparent areas onto white. PNG and supported WebP preserve transparency; the checkerboard is only a preview background.</p></details>
+      <details><summary>Are my images uploaded?</summary><p>The tool processes selected files in this browser page and has no image upload flow. This does not guarantee that your device or browser has no other network activity.</p></details>
+      <details><summary>Are phone photos and animations supported?</summary><p>This version accepts only static PNG and JPEG files within the limits. HEIC, GIF and animated PNG are unsupported. Physical mobile browser compatibility is not yet verified.</p></details>
+      <details><summary>Are EXIF, color profiles and print DPI preserved?</summary><p>EXIF orientation is applied during decoding. The tool does not copy original EXIF, GPS or ICC segments, does not promise completely metadata-free output, and does not preserve print color or DPI. Color conversion uses browser defaults and may differ between browsers.</p></details>
+    </section>
+    <noscript><p>Enable JavaScript to select, resize and export images. This tool does not upload image files.</p></noscript>
+  </main>
+  <footer><a href="https://glossquote.com/en/index.html">Back to the GlossQuote-Labs tool homepage</a></footer>
+</body>
+</html>

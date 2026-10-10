@@ -1,0 +1,8 @@
+dist/
+test/product-fixture/
+test/.tmp/
+node_modules/
+.wrangler/
+*.log
+.env
+.env.*
