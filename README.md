@@ -1,5 +1,15 @@
 # 圖片縮放與匯出 / Image resizer
 
+## Current live release — 2026-10-11
+
+[繁體中文](https://images.glossquote.com/index.html) · [English](https://images.glossquote.com/en/index.html)
+
+Deployed source: [34d954b3a982](https://github.com/KYStr/glossquote-labs-image-resizer/commit/34d954b3a982797dec4fc2f1f570fd5565d84a2e); Cloudflare version `4f890aca-28ad-40bc-94e1-19b24f440331`. This dated status supersedes older candidate-only or NOT_DEPLOYED notes below. Later documentation-only commits do not change the deployed assets.
+
+Release verification passed: 14 public assets matched the reviewed build byte for byte across 35 HTTP response checks, including HTTPS, security headers, MIME, bilingual SEO, robots/sitemap, missing paths and configured redirects. Both language pages received scoped browser checks. A native file chooser and PNG download were exercised; the downloaded PNG header confirms 1200 × 800 pixels. Changed settings invalidate the previous download.
+
+The runtime retains its previously accepted offline test evidence; this release changes hosting configuration and documentation, not tool algorithms. Full Network/Storage inspection, physical devices, assistive technology and all remaining documented manual checks are still NOT_RUN. Live publication is not a claim of exhaustive certification or search-engine indexing.
+
 GlossQuote-Labs browser-local single-image tool. Complete Traditional Chinese and English interfaces. No dependencies, accounts, image upload endpoint, telemetry, storage writes or remote fonts.
 
 Accept one static PNG or 8-bit baseline/progressive JPEG up to 10 MiB, 8,192 pixels per edge and 12 MP. Keep proportions, reduce the longest edge/width/height, then explicitly generate PNG, JPEG (white composite) or feature-tested WebP. Maximum target edge 4,000; maximum output 8 MP. View actual MIME/dimensions/bytes before downloading. Cancel, change settings or clear invalidate stale results. Startup checks all eight EXIF directions and actual encoding MIME.
