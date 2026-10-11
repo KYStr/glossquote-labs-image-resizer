@@ -20,11 +20,6 @@
       "sha256": "7ab4245a37752192df38543ac63529c675c437b791494d4ace9958f2c5d2b1f9"
     },
     {
-      "path": "README.md",
-      "bytes": 3405,
-      "sha256": "22bdacf7a9d2ef1eaf7fa15e28c209a1e024c0a74f677dbdcd803f378acecd0d"
-    },
-    {
       "path": "docs/COMPATIBILITY.md",
       "bytes": 2525,
       "sha256": "8b40b7c718e22f314b8e398bb4200c6525d631a18b7bcd8073040e185b1ec8f1"
@@ -118,6 +113,11 @@
       "path": "public/styles/tokens.css",
       "bytes": 966,
       "sha256": "be842900cbdcfe224a51e3b14c2711f3e733ddc94982f45540432cc5feed5070"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3405,
+      "sha256": "22bdacf7a9d2ef1eaf7fa15e28c209a1e024c0a74f677dbdcd803f378acecd0d"
     },
     {
       "path": "scripts/build.mjs",
@@ -216,8 +216,8 @@
     },
     {
       "path": "wrangler.jsonc",
-      "bytes": 358,
-      "sha256": "0a8a3356342f905f8b7bceb96ad246e4715f3e8b6eaa60b10c5f36beab93ffda"
+      "bytes": 383,
+      "sha256": "f8a0d0287d3bcee314a33a505f6773c4afb9acc9d98b8648fd72f8f3e2fc29f0"
     }
   ]
 }
