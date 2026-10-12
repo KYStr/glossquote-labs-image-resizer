@@ -1,7 +1,7 @@
 {
   "tool": "09-image-resizer",
   "repository": "KYStr/glossquote-labs-image-resizer",
-  "review": "explicit file allowlist, symlink/path and secret-pattern scan; synthetic tests only",
+  "review": "explicit file allowlist, symlink/path and secret-pattern scan; synthetic tests only; GQ-01 bounded repair on fixed base; unchanged acceptance inputs verified; exact staged-source review required",
   "excluded": [
     "incubator instructions/chats/HANDOFF",
     "other tools",
@@ -20,9 +20,19 @@
       "sha256": "7ab4245a37752192df38543ac63529c675c437b791494d4ace9958f2c5d2b1f9"
     },
     {
+      "path": "README.md",
+      "bytes": 4722,
+      "sha256": "2a4ea6fe7ea126dc42a174c4d88158e4f16141e7cf6b80caac850f6713ccd351"
+    },
+    {
       "path": "docs/COMPATIBILITY.md",
       "bytes": 2525,
       "sha256": "8b40b7c718e22f314b8e398bb4200c6525d631a18b7bcd8073040e185b1ec8f1"
+    },
+    {
+      "path": "docs/GQ-01-REPAIR-2026-10-12.md",
+      "bytes": 5107,
+      "sha256": "981515fdd3cc4a84b3884fa6b11a099e9c2d195ca79971adde1dba7d88470c98"
     },
     {
       "path": "docs/PRIVACY.md",
@@ -31,8 +41,8 @@
     },
     {
       "path": "docs/RELEASE-CANDIDATE.md",
-      "bytes": 5010,
-      "sha256": "e8b33915bc70edb96e2d4a8c49ed7037801e12d598d20ce1782688fe5e805412"
+      "bytes": 6510,
+      "sha256": "8f7cea1f5b12624cf3be4e19a6d1f546c3f6fc122408b469ac10533e0e526adc"
     },
     {
       "path": "docs/TEST-RESULTS.md",
@@ -71,8 +81,8 @@
     },
     {
       "path": "public/js/core/dimensions.mjs",
-      "bytes": 1430,
-      "sha256": "d527bce2d4de5a47699737df791365528f00927a5e0917be1c78fddf0b4ac623"
+      "bytes": 1531,
+      "sha256": "fa246af0b11bd90b945768355f41b440c8c1cb8afc2820cc96f2fd1d781727fd"
     },
     {
       "path": "public/js/core/image-header.mjs",
@@ -115,11 +125,6 @@
       "sha256": "be842900cbdcfe224a51e3b14c2711f3e733ddc94982f45540432cc5feed5070"
     },
     {
-      "path": "README.md",
-      "bytes": 4722,
-      "sha256": "2a4ea6fe7ea126dc42a174c4d88158e4f16141e7cf6b80caac850f6713ccd351"
-    },
-    {
       "path": "scripts/build.mjs",
       "bytes": 1605,
       "sha256": "0e13d081e6f626eadd0520bc2aa773c944d4ff768e8cf9f745bc734b922d27f4"
@@ -155,6 +160,11 @@
       "sha256": "45b8b10e2696fdbb319284304bc568227d73f84636088154e554e2f3c3389501"
     },
     {
+      "path": "scripts/verify-small-image-domain.mjs",
+      "bytes": 1946,
+      "sha256": "28017c6a3c4b5b775192381932700609e2e2330183f86a112a43b17ec4476d6e"
+    },
+    {
       "path": "test/browser-fixtures.html",
       "bytes": 696,
       "sha256": "77de3eae78780da19802ead0b6e815b5ff77d0d89c465bdb855ce1cfe3e5e57d"
@@ -183,6 +193,11 @@
       "path": "test/image-header.test.mjs",
       "bytes": 2382,
       "sha256": "9fe87e566890430babd9d13c4dffac8e7a6b30fd3e1ef25dcfb51cb9535bc1df"
+    },
+    {
+      "path": "test/image-rounding-regression.test.mjs",
+      "bytes": 831,
+      "sha256": "4178ede30e2d36ff688357f96af623d982251e1c7980a9f231957ae5e7c6f4b1"
     },
     {
       "path": "test/output.test.mjs",

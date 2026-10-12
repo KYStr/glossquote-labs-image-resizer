@@ -1,3 +1,13 @@
+> **2026-10-12 GQ-01 repair candidate: SOURCE_REPAIR_LOCAL_PASS / AWAITING_PRIMARY_REVIEW_AND_REDEPLOYMENT.** The source fixes exact positive half-pixel rounding on base c707845298011f039f6f21c1a0efd0139986e9e6. Existing live-release records below remain historical; the repaired version has not been deployed by this feature chat. Full-product/external acceptance is pending the originating primary chat's independent verification and release.
+
+## GQ-01 bounded repair candidate — 2026-10-12
+
+See [repair evidence and reproducible commands](GQ-01-REPAIR-2026-10-12.md). The original 14 plus eight new fixed regressions pass 22/22. Independent BigInt quotient/remainder oracle passes all 443,040 width/height 1..64, three-mode, no-enlargement cases. Check, explicit images.glossquote.com release build and verify:release exit 0. Runtime changes are confined to dimensions.mjs; API, input/output limits, minimum 1px, no enlargement, formats and UI remain unchanged.
+
+Repaired source and release js/core/dimensions.mjs SHA-256: `fa246af0b11bd90b945768355f41b440c8c1cb8afc2820cc96f2fd1d781727fd`. Exact source provenance is git HEAD; the externally verified publication commit/visibility and full 16-file release inventory are retained in incubator HANDOFF/evidence. Primary review, actual PNG/JPEG/available WebP output and deployed-byte verification remain required. Existing manual NOT_RUN items are retained, not relabeled as passed. Requested gpt-6.1-sol/max; backend identity UNCONFIRMED.
+
+---
+
 # Image resizer release candidate
 
 Task: THREAD-09-image-resizer. Date: 2026-10-10 (Asia/Taipei). Implementation: native HTML/CSS/ESM, Node built-ins only. Model creation accepted gpt-6.1-sol / max; backend route UNCONFIRMED. No child agents or additional chats.
