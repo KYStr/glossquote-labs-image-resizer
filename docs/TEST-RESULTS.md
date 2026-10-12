@@ -1,51 +1,21 @@
-# Image resizer acceptance evidence
+# Image resizer acceptance — 2026-10-13
 
-Date: 2026-10-10 (Asia/Taipei). Windows desktop, x86; Codex IAB actual Chromium **155.0.8059.27**, obtained from userAgentData.fullVersionList. Node v24.14.0 / npm 11.9.0. Synthetic geometric fixtures only.
+38/38 Node tests,check,preview build,release build at https://images.glossquote.com and verify:release passed with exit0. No runtime dependencies. The exact-rounding BigInt oracle previously passed443040/443040; dimension code hash is unchanged.
 
-## T03
+## Native product UI
 
-- npm.cmd test: 11/11 named behavior tests PASS, exit 0. npm.cmd run check: PASS, exit 0. Test command explicitly selects test/*.test.mjs; browser harness and generated product copies are not Node tests.
-- `node scripts/prepare-browser-tests.mjs`, `node scripts/serve-fixtures.mjs`: actual product DOM on same-origin synthetic fixture copy at 127.0.0.1:5189. `npm.cmd run dev`: actual public source at 127.0.0.1:4189, noindex.
-- T03 machine-readable report: `.runs/image-resizer/20261010-thread09/t03-browser-zh.json` (incubator-only evidence, not public source).
+Google Chrome/Chromium155.0.8059.40 in CodexIAB on Windows11 Home10.0.26200/64-bit. Each language passed13 product DOM/native cases:ordinary compatibility,explicit units/invalid zero encode,PNG equality and one-byte failure,nativeJPEG/WebP retries,all-setting invalidation,qualified-blob timeout and PNG-fallback timeout,PNG fallback failure,cancelledA/B canvas isolation,clear defaults,320px/200%text/focus and scoped resource/API privacy checks.
 
-| Case | Result | Evidence and limit |
-|---|---|---|
-| IM-01–08 | PASS A | dimensions/output/header/session tests; 12MP/10MiB inputs, 8MP output, no enlargement, strict decimal quality, malformed lengths, animation rejection |
-| IM-09 | PASS B | product decodes and really encodes all eight orientations; corners match, 5–8 swap dimensions |
-| IM-10 | PASS B | original-size PNG image/png, 79,951 bytes, fully transparent alpha 0, half-transparent alpha 128; checkerboard stays in CSS |
-| IM-11 | PASS B | JPEG image/jpeg, 25,378 bytes, transparent center [255,255,255,255] |
-| IM-12 | PASS A+B | actual WebP probe and encoder supported, alpha 0; simulated WebP failure uses real PNG encoding, PNG name and visible fallback |
-| IM-13 | PASS B | settings revoke old URL, remove result src and disable download immediately |
-| IM-14 | PASS A+B | deliberately delayed real encoding callbacks; A arrives after B, creates no URL and cannot replace B; cancellation preserves source |
-| IM-15 | PASS ownership / NOT_RUN native memory | 10 load/generate/clear cycles, URLs/bitmaps/input/result/preview cleaned. JS heap samples rise ~0.11 MB per cycle before browser GC; this does not establish a native-memory leak or prove a memory plateau. Native bitmap allocations/GC profiling remains a manual NOT_RUN |
-| IM-16 | PASS B observation + code review | initial seven same-origin static resources, HTTP resource count remains seven; no fetch/XHR calls or storage writes; no content requests. Native Network panel and physical disconnection NOT_RUN |
-| IM-17 | PASS B | hostile synthetic File name displays literal text, no child elements; fixed image-1920x1280.png name |
-| IM-18 | PASS B mocks | toBlob(null) and decoder rejection after startup: fixed error, no download, reselect recovers. Genuine malformed headers tested separately |
-| IM-19 | PASS layout / partial keyboard | 320px iframe: client/scroll 305/305; 200% text at 640px: 625/625. Direct keyboard Enter opens file chooser, synthetic file set through chooser; Tab/arrow/type/Enter selects width 1200, JPEG 85, produces real 1200×800 image/jpeg, 7,860 bytes; Tab reaches download with visible solid focus. Native picker dialog navigation, physical save and full browser zoom NOT_RUN at this milestone |
-| IM-20 | PASS B synthetic drag events | two files rejected; URI text rejected; no fetch |
+ActualI800PNG native chooser/download:JPEG185178bytes/800×600 at200kB (quality50,5attempts);WebP199246bytes/800×600 at200KiB (quality25,7attempts). JPEG was reselected and decoded by the product. WebP output natural dimensions and actual file dimensions/bytes and independent file decode were verified; DOM File-object browser readback is NOT_RUN due control-proxy limits. Language navigation cleared the source/result/limit.
 
-Mock error/latency results are distinct from real native encoding. Browser heap/GC, native picker navigation, OS save dialog, screen reader, real touch and physical mobile are user-authorized manual NOT_RUN, not PASS. Untested Firefox/Edge/Safari are not listed as verified support.
+## Controlled cases and reused scope
 
-## UI rationale
+Callback barriers and forcedWebP→PNG are explicitly simulated around real native codecs. Deadline-before-URL tests use a controlled monotonic clock; they do not assert native elapsed timing. Both timeout branches are neutral even when measured minBytes is within the limit. Core native15-case evidence,including8MP bounds/EXIF/alpha/elapsed30s/realtest-click cancel and cleanup,is reused only for unchanged codec inputs; the final whole coreharness was not rerun after strict missing-unit/terminal-reason fixes. Those fixes are covered by final Node regressions.
 
-Product App: preview is the largest contiguous region; adjacent size/format/quality controls, explicit result and download. Warm paper #f3f0e8, ink #111410, white #ffffff, acid #c8f56a, control border #60645c. System Segoe UI for controls and Cascadia Mono fallback for measured values. Desktop: preview | settings; compact: full-width preview, then settings, then result. Checkerboard has a functional alpha purpose. No decorative image, generic hero, nested cards or external fonts. Authentication and server timeout states do not apply to a browser-local tool; decoding/encoding errors and missing browser capability have recovery copy.
+Node synthetic adapters test exact bytes/nonmonotonic sequences/12attempt bounds/errors/late owners and timer ordering; they are not native codec evidence. Tests are in test/; browser harness generated by npm.cmd run fixtures is test-only.
 
-T04/T05 final source, bilingual and release build evidence will be appended after actual execution.
+NOT_RUN:fullNetwork/Storage/physicaloffline,physicalmobile/touch,screenreader/otherengines,fullbrowserzoom,nativememory/GC and full nativeOS keyboard workflows.200%text is distinct from full browser zoom; reference counts are distinct from native allocation profiling. No new live release, external-review pass,performance guarantee or optimal-quality claim is made.
 
-## T04 — PASS with explicit manual NOT_RUN
+## Independent review scope
 
-Static how-to, limits, local data lifecycle and five FAQs added to initial HTML (readable without JS). npm.cmd test 11/11 PASS, check/build exit 0, eight public files, preview noindex. Existing unchanged algorithm/native codec evidence reused.
-
-Actual 320px public page: client/scroll 305/305, all static headings present. Product source and result focus inspected on desktop and mobile. Contrast calculation: ink/paper 16.30; muted/paper 6.30; ink/acid 14.78; control-border/white 6.04; danger/paper 7.68. Control targets min 44px, two-layer focus and reduced-motion rules reviewed. There is one active primary action per state after the T03 visual fix.
-
-Five Ctrl-plus key events in IAB did not change innerWidth (1280), clientWidth (1265) or visualViewport.scale (1); Ctrl-0 sent afterward. Full browser 200% zoom remains NOT_RUN, not confused with the passed 200% text-size reflow. Screen reader, physical mobile/touch, native heap/GC and native OS picker/save remain manual NOT_RUN under TASK-ENTRY authorization. No additional product decision needed.
-
-## T05 final — PASS with authorized manual NOT_RUN
-
-- Added full static English page, both complete runtime locales, same-language homepage links and language navigation. 14/14 named Node tests PASS, exit 0; npm.cmd run check exit 0. Negative auditor tests detected a real issue: it inspected ancestor .tmp as a public dotfile. Fixed to inspect paths relative to the audited root, preserving dotfile rejection inside public.
-- Default npm.cmd run build exit 0 remains noindex. Final npm.cmd run build -- --release --site=https://images.glossquote.com exit 0; node scripts/verify-release.mjs exit 0. Final dist has 16 files: three HTML, seven JS, two CSS, robots, sitemap, headers and redirects. No tests/docs/user inputs in dist. Reciprocal canonical/hreflang, x-default, allowed origin, robots, sitemap, 404, MIME/security header preparation and local release-asset HTTP checks PASS. Cloudflare packaging and live response behavior remain integration NOT_RUN.
-- Final bilingual product browser runs each passed all 13 cases. Traditional Chinese and English reports: t05-browser-zh-final.json / t05-browser-en-final.json in the dedicated incubator run directory. Nine same-origin resources load initially in each language, unchanged during workflows; zero observed network API calls and storage writes. Native outputs unchanged: PNG alpha 0/128, JPEG white center 255 per channel, WebP alpha 0.
-- Final actual 320px, 768px and 200% text cases: client/scroll 305/305, 753/753, 625/625. The standard-width preview fraction was 63.6879%; removed the settings column’s 15rem minimum, then both-language actual browser assertions required >=65% and passed. Desktop and compact layouts were unchanged. No further design exploration.
-- Direct English public-source verification: invalid 1e3 produces English size error and disables generation; corrected 1200 + JPEG produces 1200×800, image/jpeg, 7,860 bytes. Keyboard focus reaches download with visible solid outline; only download has active primary styling after success. English source/FAQ/help and matching-language homepage links inspected.
-- Screenshot evidence retained in incubator .runs/image-resizer/20261010-thread09/desktop-result-en.jpg and mobile-en.jpg; screenshots contain synthetic image only. These are not runtime/public assets.
-- Native memory/GC plateau, OS save, native picker navigation, screen reader, physical mobile/touch, full browser zoom, native Network and physical offline remain explicit manual NOT_RUN. Wrangler not installed: task forbids new dependencies/credentials/deployment. Config checked against current official static asset documentation; Wrangler dry-run and live release stay with the integration chat.
+Independent Edge review passed all13 English product cases. Chinese first9cases passed; two composite cancel-frame checks failed and remain preserved. A separate diagnostic measured synchronous cancellation7.7ms to ready/zeroURLs and postclick frame3.2ms (10.9ms composite), while a750ms initial baseline frame occurred before cancellation. The original500ms gate is unchanged. Scheduling variation was observed without cancellation; no specificAX/GPU cause or all-environment timing guarantee is claimed. Full Chinese Edge harness is not claimedPASS. Owner IAB13perlanguage evidence is separate.

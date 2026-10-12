@@ -23,13 +23,21 @@ function drawPreview(state) {
 }
 function render(state) {
   const busy=['checking','decoding','encoding'].includes(state.status);
+  const limited=state.settings.targetEnabled;
+  const limitText=state.target.ok&&limited?t.targetPreview(number.format(Number(state.settings.targetRaw)),state.settings.targetUnit,number.format(state.target.value)):'';
   el('file').disabled=!capabilities.supported||busy;el('fields').disabled=!state.source||busy;el('clear').disabled=!capabilities.supported||state.status==='idle'&&!state.source;
-  el('cancel').hidden=!busy;el('generate').disabled=!state.source||busy||!state.dimensions.ok||!state.quality.ok;el('generate').textContent=state.status==='encoding'?t.generating:t.generate;
+  el('cancel').hidden=!busy;el('generate').disabled=!state.source||busy||!state.dimensions.ok||!state.quality.ok||!state.target.ok;
+  el('cancel').classList.toggle('primary',busy);el('target-met').textContent=t.targetMet;
+  el('generate').textContent=state.status==='encoding'?t.generating:limited?(state.settings.mime==='image/png'?t.generateLimit:t.generateTry):t.generate;
   el('generate').classList.toggle('primary',!!state.source&&state.status!=='success');
   el('drop-zone').setAttribute('aria-busy',String(busy));
-  for(const [id,key] of [['mode','mode'],['size','value'],['format','mime'],['quality','quality']]) if(el(id).value!==state.settings[key]) el(id).value=state.settings[key];
+  for(const [id,key] of [['mode','mode'],['size','value'],['format','mime'],['quality','quality'],['target-size','targetRaw'],['target-unit','targetUnit']]) if(el(id).value!==state.settings[key]) el(id).value=state.settings[key];
+  el('target-enabled').checked=limited;el('target-enabled').setAttribute('aria-expanded',String(limited));el('target-fields').hidden=!limited;
+  el('target-exact').textContent=limitText;
+  el('quality-label').textContent=limited?t.startQualityLabel:t.qualityLabel;el('quality-help').textContent=limited?t.targetQualityHelp:t.qualityHelp;
+  el('target-format-help').textContent=state.settings.mime==='image/png'?t.targetPngHelp:t.targetLossyHelp;
   el('quality-field').hidden=state.settings.mime==='image/png';el('jpeg-note').hidden=state.settings.mime!=='image/jpeg';el('webp-note').hidden=capabilities.webp;
-  for(const [id,valid,errorCode] of [['size',state.dimensions.ok,'SIZE_INVALID'],['quality',state.quality.ok,'QUALITY_INVALID']]) {
+  for(const [id,valid,errorCode] of [['size',state.dimensions.ok,'SIZE_INVALID'],['quality',state.quality.ok,'QUALITY_INVALID'],['target-size',state.target.ok,'TARGET_SIZE_INVALID']]) {
     const invalid=!!state.source&&!valid;el(id).setAttribute('aria-invalid',String(invalid));el(`${id}-error`).hidden=!invalid;el(`${id}-error`).textContent=invalid?errors[errorCode]:'';
   }
   el('filename').textContent=state.source?.name||'';
@@ -41,12 +49,19 @@ function render(state) {
     if(el('result-image').getAttribute('src')!==state.output.url) el('result-image').src=state.output.url;
     el('output-info').textContent=`${state.output.mime} · ${number.format(state.output.width)} × ${number.format(state.output.height)} px · ${formatBytes(state.output.bytes)}`;
     el('fallback').hidden=state.notice!=='FORMAT_FALLBACK';el('fallback').textContent=state.notice==='FORMAT_FALLBACK'?t.fallback:'';
+    el('target-met').hidden=!limited;el('target-result-info').hidden=!limited;
+    el('target-result-info').textContent=limited?t.targetResult(limitText,number.format(state.metrics.attempts),state.output.quality===null?t.pngQuality:t.appliedQuality(number.format(state.output.quality))):'';
     if(state.status==='success'&&lastStatus!==`${state.id}:success`) activateTab('result');
-  } else {el('result-image').removeAttribute('src');el('output-info').textContent='';el('fallback').textContent='';activateTab('source');}
-  const statusKey=`${state.id}:${state.status}:${state.code}:${state.notice}`;
+  } else {el('result-image').removeAttribute('src');el('output-info').textContent='';el('fallback').textContent='';el('target-result-info').textContent='';el('target-result-info').hidden=true;el('target-met').hidden=true;activateTab('source');}
+  const targetFailure=!!state.metrics&&['TARGET_NOT_MET','ENCODE_TIMEOUT'].includes(state.code);
+  el('target-feedback').hidden=!targetFailure;
+  el('target-feedback-info').textContent=targetFailure?(state.code==='ENCODE_TIMEOUT'?t.targetTimeout(number.format(state.metrics.attempts),number.format(state.metrics.targetBytes),state.metrics.minBytes===null?null:formatBytes(state.metrics.minBytes)):t.targetFailure(number.format(state.metrics.attempts),formatBytes(state.metrics.minBytes),number.format(state.metrics.targetBytes),state.metrics.minQuality===null?'':t.appliedQuality(number.format(state.metrics.minQuality)))):'';
+  const statusKey=`${state.id}:${state.status}:${state.code}:${state.notice}:${state.metrics?.attempts??0}`;
   if(lastStatus!==statusKey) {
-    el('status').textContent=state.code?errors[state.code]:state.notice==='CANCELLED'?messages.cancelled:state.status==='success'?t.success(number.format(state.output.width),number.format(state.output.height),state.output.extension.toUpperCase(),formatBytes(state.output.bytes)):messages[state.status]||messages.idle;
-    el('status').classList.toggle('error',!!state.code);lastStatus=statusKey;
+    let message=state.code?errors[state.code]:state.notice==='CANCELLED'?messages.cancelled:state.status==='success'?t.success(number.format(state.output.width),number.format(state.output.height),state.output.extension.toUpperCase(),formatBytes(state.output.bytes)):limited&&state.status==='encoding'?t.targetProgress(number.format(state.metrics?.attempts??0),state.metrics?.lastQuality===null?null:number.format(state.metrics?.lastQuality),state.settings.mime==='image/png'):limited&&state.source?(state.target.ok?t.targetReady:errors.TARGET_SIZE_INVALID):messages[state.status]||messages.idle;
+    if(state.notice==='FORMAT_FALLBACK'&&!state.output)message+=` ${state.code==='TARGET_NOT_MET'?t.fallbackFailure:t.fallbackNeutral}`;
+    if(el('status').textContent!==message)el('status').textContent=message;
+    el('status').classList.toggle('error',!!state.code||limited&&!!state.source&&!state.target.ok);lastStatus=statusKey;
   }
   document.documentElement.dataset.state=state.status;
   if(state.status==='idle') el('file').value='';
@@ -62,6 +77,9 @@ async function init() {
   el('cancel').addEventListener('click',()=>{session.cancel();if(session.snapshot().source) el('generate').focus();else el('file').focus();});
   el('settings').addEventListener('submit',event=>{event.preventDefault();session.generate();});
   for(const [id,key] of [['mode','mode'],['size','value'],['format','mime'],['quality','quality']]) el(id).addEventListener(['size','quality'].includes(id)?'input':'change',()=>session.update({[key]:el(id).value}));
+  el('target-enabled').addEventListener('change',()=>session.update({targetEnabled:el('target-enabled').checked}));
+  el('target-size').addEventListener('input',()=>session.update({targetRaw:el('target-size').value}));
+  el('target-unit').addEventListener('change',()=>session.update({targetUnit:el('target-unit').value}));
   el('download').addEventListener('click',()=>{const output=session.snapshot().output;if(!output) return;const link=document.createElement('a');link.href=output.url;link.download=output.filename;link.click();});
   for(const name of ['source','result']) {
     el(`${name}-tab`).addEventListener('click',()=>activateTab(name));

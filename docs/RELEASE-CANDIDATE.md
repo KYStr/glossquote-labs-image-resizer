@@ -1,52 +1,11 @@
-> **2026-10-12 GQ-01 repair candidate: SOURCE_REPAIR_LOCAL_PASS / AWAITING_PRIMARY_REVIEW_AND_REDEPLOYMENT.** The source fixes exact positive half-pixel rounding on base c707845298011f039f6f21c1a0efd0139986e9e6. Existing live-release records below remain historical; the repaired version has not been deployed by this feature chat. Full-product/external acceptance is pending the originating primary chat's independent verification and release.
+# File size limit source candidate — 2026-10-13
 
-## GQ-01 bounded repair candidate — 2026-10-12
+Bilingual browser-local image resizer. Optional exact file size limit in kB=1000, KiB=1024 or bytes. JPEG/WebP try a bounded sequence of lower quality values; PNG is checked once. Dimensions and the selected format are preserved. Only the first actual result within the limit is offered for download. Timeout/failure has no download and retains settings for editing.
 
-See [repair evidence and reproducible commands](GQ-01-REPAIR-2026-10-12.md). The original 14 plus eight new fixed regressions pass 22/22. Independent BigInt quotient/remainder oracle passes all 443,040 width/height 1..64, three-mode, no-enlargement cases. Check, explicit images.glossquote.com release build and verify:release exit 0. Runtime changes are confined to dimensions.mjs; API, input/output limits, minimum 1px, no enlargement, formats and UI remain unchanged.
+Local acceptance:38 Node tests,check,preview/release build and release verification passed.13 product DOM/native cases passed per language, including controlled clock/callback/fallback boundaries that are clearly labeled. Actual native product downloads:JPEG185178bytes/800×600/quality50/5attempts at200kB;WebP199246bytes/800×600/quality25/7attempts at200KiB.
 
-Repaired source and release js/core/dimensions.mjs SHA-256: `fa246af0b11bd90b945768355f41b440c8c1cb8afc2820cc96f2fd1d781727fd`. Exact source provenance is git HEAD; the externally verified publication commit/visibility and full 16-file release inventory are retained in incubator HANDOFF/evidence. Primary review, actual PNG/JPEG/available WebP output and deployed-byte verification remain required. Existing manual NOT_RUN items are retained, not relabeled as passed. Requested gpt-6.1-sol/max; backend identity UNCONFIRMED.
+This source candidate is not a new live release. Integration must independently verify the fixed gitHEAD, deploy the reviewed static assets, verify HTTPS/MIME/security headers/SEO/404/redirects and actual browser workflows, then update the bilingual family homepage. Existing live GQ-01 release is distinct. Source manifest identifies exact reviewed blobs; generated dist and private evidence are excluded.
 
----
+Manual exceptions remain:physical devices/touch,AT/other engines/full zoom,nativeGC,complete Network/Storage/offline and nativeOS keyboard coverage. WebP DOM File-object readback is unavailable in the browser-control proxy; actual output natural dimensions, downloaded bytes/header and independent file decoding are verified without permission expansion.
 
-# Image resizer release candidate
-
-Task: THREAD-09-image-resizer. Date: 2026-10-10 (Asia/Taipei). Implementation: native HTML/CSS/ESM, Node built-ins only. Model creation accepted gpt-6.1-sol / max; backend route UNCONFIRMED. No child agents or additional chats.
-
-## Candidate and integration boundary
-
-- Traditional Chinese: https://images.glossquote.com/index.html
-- English: https://images.glossquote.com/en/index.html
-- Target source repository: https://github.com/KYStr/glossquote-labs-image-resizer
-- Hosting: **NOT_DEPLOYED**. This chat has not read deployment credentials, changed DNS, deployed a Worker, modified 00-home or changed another tool.
-- Candidate Worker: glossquote-image-resizer; static dist assets, explicit .html routing, root/en redirects, 404-page fallback, no dynamic backend or workers.dev/preview URL.
-
-## Observable acceptance
-
-T00–T04 passed with authorized manual NOT_RUN recorded in TEST-RESULTS. T05 adds complete bilingual static/runtime copy and release SEO. Required final check results, artifact inventory and source publication evidence are appended below after execution. Do not treat preparation or a source push as a live release.
-
-Actual tested engine: Windows desktop Chromium 155.0.8059.27. Native eight-orientation decoding and re-encoding, PNG alpha, JPEG white composite and WebP MIME passed. Deterministic boundaries and injected failures/late callbacks passed. Physical mobile, other engines, screen reader, native picker/save navigation, native memory/GC, full browser zoom and native Network/offline inspection remain NOT_RUN. 320px and 200% text reflow are actual browser checks.
-
-## Integration procedure
-
-1. Independently review the verified source commit and release inventory. Review manual exceptions as documented; no new user authorization is needed for already authorized free hosting.
-2. Run npm.cmd test, check, build -- --release --site=https://images.glossquote.com, verify:release on the candidate as needed for independent acceptance. Default build is noindex.
-3. Validate Wrangler packaging using the integrator’s reviewed, pinned deployment tooling and task-approved isolated credential loader. No Wrangler package or deployment credential is included here. Local artifact validation does not replace an actual Wrangler dry run or live checks.
-4. Deploy this static candidate to the approved free subdomain, verify HTTPS, both exact canonical pages, MIME/security response headers, root/en redirects, status 404, robots/sitemap and real browser workflow.
-5. Only after that live release is verified, update both languages in the shared homepage catalog to published; rebuild/check/publish its source, deploy the homepage and verify both live catalog pages. This implementation chat has no write ownership of those shared files.
-
-## Official hosting/SEO references reviewed on 2026-10-10
-
-- [Cloudflare static asset headers](https://developers.cloudflare.com/workers/static-assets/headers/): `_headers` applies to static assets; Wrangler infers MIME, with explicit JS/CSS rules prepared here.
-- [Cloudflare HTML handling](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/): `none` preserves explicit .html routes; root/en aliases are separate redirects.
-- [Cloudflare 404 pages](https://developers.cloudflare.com/workers/static-assets/routing/static-site-generation/): static 404-page handling is configured; live status still needs integration verification.
-- [Google language variants](https://developers.google.com/search/docs/specialty/international/localized-versions): absolute reciprocal alternates including self, zh-Hant/en and x-default. No indexing or ranking promise.
-
-The source-copy version uses git HEAD as its exact provenance. The incubator HANDOFF and this workspace document record the externally verified publication commit after publication; no self-referential commit hash is fabricated inside its own commit.
-
-## Final local acceptance (2026-10-10)
-
-READY for source publication and integration review with the documented manual NOT_RUN. T00–T05 local implementation is complete; no required algorithm or native codec feasibility gate failed. Final npm.cmd test: 14/14 PASS; check PASS; preview build PASS; release build PASS; verify:release PASS; actual browser product cases: 13/13 in zh-Hant and 13/13 in en. All command exit codes 0. See TEST-RESULTS for partial/manual cases and scope.
-
-Final artifact inventory: 16 files, with bytes/SHA-256 in the dedicated t05-release-inventory-final.json evidence. The integration chat should rebuild from verified source and confirm its inventory; generated dist is not included in GitHub publication.
-
-Pending integration checks: actual pinned Wrangler packaging, DNS/HTTPS, live headers/MIME/status/indexing rules, live workflow, then both-language homepage catalog publication. These are not local failures and this chat has no write authority over the shared release files. No additional product choice is currently unresolved.
+Build: npm.cmd run build -- --release --site=https://images.glossquote.com; npm.cmd run verify:release. Preview remains noindex.

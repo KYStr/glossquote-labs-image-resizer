@@ -1,17 +1,18 @@
 {
   "tool": "09-image-resizer",
   "repository": "KYStr/glossquote-labs-image-resizer",
-  "review": "explicit file allowlist, symlink/path and secret-pattern scan; synthetic tests only; GQ-01 bounded repair on fixed base; unchanged acceptance inputs verified; exact staged-source review required",
+  "review": "Explicit public source allowlist,scoped symlink/path and secret/internal-dispatch scan;synthetic tests only;source availability distinct fromlive release",
   "excluded": [
-    "incubator instructions/chats/HANDOFF",
-    "other tools",
     "credentials",
+    "private data",
+    "internal task/dispatch/HANDOFF",
+    "OUTCOME-UPGRADE",
     ".runs",
     "dist",
     "test/product-fixture",
     "test/.tmp",
-    ".wrangler",
-    "node_modules"
+    "node_modules",
+    ".wrangler"
   ],
   "files": [
     {
@@ -21,18 +22,18 @@
     },
     {
       "path": "README.md",
-      "bytes": 4722,
-      "sha256": "2a4ea6fe7ea126dc42a174c4d88158e4f16141e7cf6b80caac850f6713ccd351"
+      "bytes": 2779,
+      "sha256": "25058c308a2f87cafff25ee17c6e9104140561e8bbb3290fbf5152a43f4f77b1"
     },
     {
       "path": "docs/COMPATIBILITY.md",
-      "bytes": 2525,
-      "sha256": "8b40b7c718e22f314b8e398bb4200c6525d631a18b7bcd8073040e185b1ec8f1"
+      "bytes": 1135,
+      "sha256": "f19d0ffbe143d7b127ed55a284a4fa746f25ca8620ba7aa21f8f96d09a1bfe47"
     },
     {
       "path": "docs/GQ-01-REPAIR-2026-10-12.md",
-      "bytes": 5107,
-      "sha256": "981515fdd3cc4a84b3884fa6b11a099e9c2d195ca79971adde1dba7d88470c98"
+      "bytes": 1008,
+      "sha256": "8c312e9c644fb674ec2c03df77a8e2b388155dce3d971825298cf92610a261fa"
     },
     {
       "path": "docs/PRIVACY.md",
@@ -41,13 +42,13 @@
     },
     {
       "path": "docs/RELEASE-CANDIDATE.md",
-      "bytes": 6510,
-      "sha256": "8f7cea1f5b12624cf3be4e19a6d1f546c3f6fc122408b469ac10533e0e526adc"
+      "bytes": 1675,
+      "sha256": "931c7b0db16d27ae4236cbd8840aa1ede89cac741cacd7830b52ccd82ca8d284"
     },
     {
       "path": "docs/TEST-RESULTS.md",
-      "bytes": 8021,
-      "sha256": "589f2dcf812792d69a2e6abb95b53eccf52e98d0e87802dfdb094ed1bdf5f21e"
+      "bytes": 3029,
+      "sha256": "ba25f34765816fd88fca28a1c2ebf8b9b842a33e82d04154501f5bbcfabaf21b"
     },
     {
       "path": "package.json",
@@ -66,18 +67,18 @@
     },
     {
       "path": "public/en/index.html",
-      "bytes": 9160,
-      "sha256": "b1a117383df50aeb460ab47621885c036f0eed1eb7877a7cac33be65671d16dd"
+      "bytes": 11213,
+      "sha256": "77acd451ad58680a84f067ede28b3f38608cb76ac8484948258e0a806a7dc8d1"
     },
     {
       "path": "public/index.html",
-      "bytes": 8435,
-      "sha256": "e06e42415b04d487884ad97db0e668643d06c3a0881eef59c8a5c13265f3c331"
+      "bytes": 10402,
+      "sha256": "690b76325194c9c533552c4dd0b28d9ec0c5d8c591712b345895f7fda4d5cf72"
     },
     {
       "path": "public/js/app.mjs",
-      "bytes": 7693,
-      "sha256": "c0160655ed10e4a8f78f93817a10c939fc76c87149eb458004599a2cc56b09c3"
+      "bytes": 10565,
+      "sha256": "d8596461386e1cb97d479f4303fcd38f2c66c709c35295d0767c0ff4fb69e55d"
     },
     {
       "path": "public/js/core/dimensions.mjs",
@@ -95,19 +96,24 @@
       "sha256": "90ace96fbaf908a0a82198231a6bdd35fcbf819e02b7b80be93401ef994989df"
     },
     {
+      "path": "public/js/core/target-size.mjs",
+      "bytes": 1054,
+      "sha256": "9231ca71355b391e525a69ff9bb1c6c62b11105029e04aa9680781dbf3680891"
+    },
+    {
       "path": "public/js/image-session.mjs",
-      "bytes": 9241,
-      "sha256": "58c33701ffa6d95f6697ec1741a9d2e96f3bd0cf6d611581304a4fb3c86a9710"
+      "bytes": 13137,
+      "sha256": "99883c7675ae3ae32ff4c3c8ab558bcfdc8505755a02b50baabc7b5a49d9bac3"
     },
     {
       "path": "public/js/locales/en.mjs",
-      "bytes": 1693,
-      "sha256": "660683fd90e4ce53483f2ba34e7942856de2b34ff2a30728b51e7f0ab960e7cf"
+      "bytes": 4142,
+      "sha256": "5d6c791304f8c0a2ff7f0716a3fca4080e651e1c2a5a2bc479775e7925709915"
     },
     {
       "path": "public/js/locales/zh-Hant.mjs",
-      "bytes": 1604,
-      "sha256": "e543b3f7a2bc5c49a7041d39a2997fa9e04a19a6740a72a6de8acd57b336bd7f"
+      "bytes": 3755,
+      "sha256": "752edcf4dc0215b237b9671af79e77127d020983ebd8a983a5311a600f1f31a5"
     },
     {
       "path": "public/robots.txt",
@@ -116,8 +122,8 @@
     },
     {
       "path": "public/styles/app.css",
-      "bytes": 7155,
-      "sha256": "e92741bde11ae06a4fedc07885ef62d8577f8dfdb3ad35a1420bf1ec95221cd4"
+      "bytes": 7985,
+      "sha256": "90be595d9321ffdc2bd227c842f2b5cbd29b3060274cbb5f5e0b8c503b230f55"
     },
     {
       "path": "public/styles/tokens.css",
@@ -171,8 +177,8 @@
     },
     {
       "path": "test/browser-fixtures.mjs",
-      "bytes": 5439,
-      "sha256": "512936f9f07c9f6560efdc6cfbd7c2229eec99ec7d4586a3f9f9fc5030ab2f56"
+      "bytes": 5965,
+      "sha256": "647b8263bd9b7385a83306814c40c203e138d2b593dc6822cf33e7d8872ee4cd"
     },
     {
       "path": "test/check.test.mjs",
@@ -206,13 +212,13 @@
     },
     {
       "path": "test/product-tests.html",
-      "bytes": 772,
-      "sha256": "870b3be1b12452645e21f612b13388d71471772538065273afa4f8b4a3126486"
+      "bytes": 2521,
+      "sha256": "7d8d51269ac7500c7382c4c58116d4ef3bdc52b3416bd8ff3bfac10689dd042c"
     },
     {
       "path": "test/product-tests.mjs",
-      "bytes": 13931,
-      "sha256": "da0181bf629fd71d61e60f56b02daa775a04590e9ac0c3413f705ba4d01192d5"
+      "bytes": 60918,
+      "sha256": "5d5d117069bafba9d8edb921cbef5a7b03eca56e7dc862db9940955da627fd43"
     },
     {
       "path": "test/scaffold.test.mjs",
@@ -221,13 +227,23 @@
     },
     {
       "path": "test/session.test.mjs",
-      "bytes": 5325,
-      "sha256": "0e0386004b21f32bd92ec1047186bf309875a0b20565edc52dc5c54d73706329"
+      "bytes": 17744,
+      "sha256": "1b4562f353de8e573020483c8b44dcb1fafa69f0370c158a7da12fd965dcad00"
     },
     {
       "path": "test/site-output.test.mjs",
       "bytes": 2659,
       "sha256": "40a0847be8817b71e78b880b5d0cbbe28d48eb96fe09d83d2bb0c3334d79406e"
+    },
+    {
+      "path": "test/target-size.test.mjs",
+      "bytes": 2170,
+      "sha256": "06786b9437ae20e62d43a1df592be784cdf8979b24406a004af8e0c7169c67b3"
+    },
+    {
+      "path": "test/target-ui.test.mjs",
+      "bytes": 2280,
+      "sha256": "733a0e465045759afe6436ff8a0f0deff032b769271d38477a67de4e6d439024"
     },
     {
       "path": "wrangler.jsonc",

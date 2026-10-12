@@ -52,6 +52,14 @@ legend { font-weight: 650; font-size: 1.25rem; margin-bottom: var(--gq-space-4);
 .settings small { display: block; font-size: .875rem; margin-top: var(--gq-space-2); }
 .help { font-size: .875rem; }
 .field-error { font-size: .875rem; color: var(--gq-color-danger-text); }
+.settings .limit-toggle { display:flex; align-items:center; gap:var(--gq-space-3); min-height:2.75rem; margin-top:var(--gq-space-6); padding-top:var(--gq-space-3); border-top:1px solid var(--gq-color-separator); }
+.settings .limit-toggle input { width:1.5rem; min-height:1.5rem; height:1.5rem; padding:0; flex:none; accent-color:var(--gq-color-acid); }
+.target-inputs { display:grid; grid-template-columns:minmax(0,1fr) 5.5rem; gap:var(--gq-space-2); }
+.target-inputs>div { min-width:0; }
+.exact-limit { font: .875rem/1.6 var(--gq-font-data); overflow-wrap:anywhere; }
+.target-feedback { border-left:3px solid var(--gq-color-danger-text); padding:var(--gq-space-2) var(--gq-space-4); margin-bottom:var(--gq-space-4); }
+.target-feedback p { overflow-wrap:anywhere; }
+#target-met { font-family:var(--gq-font-ui); font-weight:650; }
 [aria-invalid="true"] { border: 2px solid var(--gq-color-danger-text); }
 .actions { display: flex; flex-wrap: wrap; gap: var(--gq-space-2); margin: var(--gq-space-6) 0 var(--gq-space-3); }
 .status { padding: var(--gq-space-3) 0; min-height: 3rem; }

@@ -7,6 +7,15 @@ export function syntheticCanvas(width = 2400, height = 1600) {
   ctx.clearRect(width/2-50,height/2-50,100,100); ctx.clearRect(width/2-100,height/2-100,40,40); ctx.fillStyle = 'rgba(200,80,40,.5)'; ctx.fillRect(width/2-100,height/2-100,40,40);
   return canvas;
 }
+export function noiseCanvas(width=800,height=600) {
+  const canvas=document.createElement('canvas');canvas.width=width;canvas.height=height;
+  const ctx=canvas.getContext('2d'),image=ctx.createImageData(width,height);let state=0x19c0ffee;
+  for(let index=0;index<image.data.length;index+=4) {
+    state^=state<<13;state^=state>>>17;state^=state<<5;
+    image.data[index]=state&255;image.data[index+1]=state>>>8&255;image.data[index+2]=state>>>16&255;image.data[index+3]=255;
+  }
+  ctx.putImageData(image,0,0);return canvas;
+}
 export const toBlob = (canvas,mime,quality) => new Promise((yes,no) => canvas.toBlob(blob => blob?.size ? yes(blob) : no(new Error('ENCODE_FAILED')),mime,quality));
 export function exifJpeg(jpeg,orientation) {
   const segment = new Uint8Array(36); segment.set([255,225,0,34,69,120,105,102,0,0,73,73,42,0,8,0,0,0,1,0,18,1,3,0,1,0,0,0]); segment[28] = orientation;
